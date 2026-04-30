@@ -102,7 +102,7 @@ body.hov #cur-ring{width:50px;height:50px}
 
 /*  TICKER  */
 .ticker{background:var(--g1);padding:14px 0;overflow:hidden;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
-.t-track{display:flex;animation:tick 35s linear infinite;width:max-content}
+.t-track{display:flex;animation:tick 80s linear infinite;width:max-content}
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .t-item{font-size:13px;color:var(--sf);white-space:nowrap;padding:0 20px;display:flex;align-items:center;gap:20px}
 .t-sep{color:var(--xs);font-size:10px}
