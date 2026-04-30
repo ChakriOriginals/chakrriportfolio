@@ -326,8 +326,6 @@ footer{background:var(--g1);padding:36px 40px;border-top:1px solid var(--bd)}
   .nb-grid{grid-template-columns:1fr 1fr}
 }
 
-/* scriptSrc     : ["'self'", "'unsafe-inline'"],
-scriptSrcAttr : ["'unsafe-inline'"], RESPONSIVE: WIDE  */
 @media(min-width:1600px){
   .wrap,.nav-in,.nb-grid,.ft-in{max-width:1600px}
 }
