@@ -166,13 +166,17 @@ document.querySelectorAll('.r').forEach(function(el) { ro.observe(el); });
 
 
 /*  Contact form  */
+/* Messages are delivered by Web3Forms (https://web3forms.com), so the form works on
+   GitHub Pages without a server. The access key is public by design and only lets
+   visitors send mail to the inbox it was created for. */
+var WEB3FORMS_KEY = '40243ac8-68d4-46e4-9496-4ce8fdb55994';
+
 function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 
 async function sendForm() {
   var fn = document.getElementById('fn').value.trim();
   var ln = document.getElementById('ln').value.trim();
   var em = document.getElementById('em').value.trim();
-  var tp = document.getElementById('tp') ? document.getElementById('tp').value : 'General';
   var mg = document.getElementById('mg').value.trim();
 
   /* clear previous errors */
@@ -200,14 +204,23 @@ async function sendForm() {
   ico.style.display  = 'none';
 
   try {
-    var response = await fetch('/api/contact', {
+    var name = (fn + ' ' + ln).trim();
+    var response = await fetch('https://api.web3forms.com/submit', {
       method  : 'POST',
-      headers : { 'Content-Type': 'application/json' },
-      body    : JSON.stringify({ firstName: fn, lastName: ln, email: em, topic: tp, message: mg })
+      headers : { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body    : JSON.stringify({
+        access_key : WEB3FORMS_KEY,
+        subject    : 'New portfolio message from ' + name,
+        from_name  : 'Portfolio Contact Form',
+        name       : name,
+        email      : em,
+        message    : mg,
+        botcheck   : document.getElementById('botcheck').checked
+      })
     });
     var data = await response.json();
 
-    if (data.ok) {
+    if (data.success) {
       lbl.textContent = 'Sent!';
       spin.style.display = 'none';
       fok.classList.add('show');
@@ -220,16 +233,11 @@ async function sendForm() {
         fok.classList.remove('show');
       }, 3000);
     } else {
-      if (data.errors) {
-        if (data.errors.firstName) { document.getElementById('fn').classList.add('err'); document.getElementById('fn-e').textContent = data.errors.firstName; document.getElementById('fn-e').classList.add('show'); }
-        if (data.errors.email)     { document.getElementById('em').classList.add('err'); document.getElementById('em-e').textContent = data.errors.email;     document.getElementById('em-e').classList.add('show'); }
-        if (data.errors.message)   { document.getElementById('mg').classList.add('err'); document.getElementById('mg-e').textContent = data.errors.message;   document.getElementById('mg-e').classList.add('show'); }
-      }
       btn.disabled = false;
       lbl.textContent = 'Send Message';
       spin.style.display = 'none';
       ico.style.display  = 'block';
-      if (data.error) alert(data.error);
+      alert((data.body && data.body.message) || data.message || 'Message could not be sent. Please email me directly at saichakrritadikonda@gmail.com');
     }
   } catch (err) {
     console.error('sendForm error:', err);

@@ -22,7 +22,7 @@ app.use(helmet({
       styleSrc   : ["'self'", "'unsafe-inline'"],
       fontSrc    : ["'self'", "data:"],
       imgSrc     : ["'self'", "data:", "https:"],
-      connectSrc : ["'self'"],
+      connectSrc : ["'self'", "https://api.web3forms.com"],
       frameSrc   : ["https://www.linkedin.com"],
     },
   },
