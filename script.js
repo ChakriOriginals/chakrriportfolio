@@ -29,7 +29,7 @@ var secs  = document.querySelectorAll('section[id]');
 function updateNav() {
   navEl.classList.toggle('scrolled', window.scrollY > 20);
   var cur = '';
-  secs.forEach(function(s) { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  secs.forEach(function(s) { if (window.scrollY + window.innerHeight / 3 >= s.offsetTop) cur = s.id; });
   navAs.forEach(function(a) { a.classList.toggle('act', a.getAttribute('href') === '#' + cur); });
 }
 window.addEventListener('scroll', updateNav, {passive: true});
