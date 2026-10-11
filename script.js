@@ -1,27 +1,3 @@
-/*  Custom cursor ─ */
-(function(){
-  var dot  = document.getElementById('cur-dot');
-  var ring = document.getElementById('cur-ring');
-  var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  var rx = mx, ry = my;
-  dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a, button, .b-card, .p-card, .proj-feat, .ach-card, .s-card').forEach(function(el) {
-    el.addEventListener('mouseenter', function() { document.body.classList.add('hov'); });
-    el.addEventListener('mouseleave', function() { document.body.classList.remove('hov'); });
-  });
-})();
-
 /*  Nav: scroll shadow + active section highlight ─ */
 var navEl = document.getElementById('nav');
 var navAs = document.querySelectorAll('.nav-links a');
